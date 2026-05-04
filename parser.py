@@ -1,6 +1,6 @@
 import json
 
-from erdparser.table import Table
+from table import Table
 
 class DiagramParser:
     def __init__(self, file_path: str):

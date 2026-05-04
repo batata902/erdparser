@@ -1,11 +1,17 @@
-from erdparser.column import Column
+from column import Column
 
 class Table:
     def __init__(self, table_name: str, columns: list):
-        self.table_name: str = table_name
+        self.table_name: str = table_name.replace(' ', '_')
         
-        self.columns: list = self.get_columns(columns)
+        self.columns: list = []
+        self.foreign_keys: list = []
+        self.get_columns(columns)
         
     def get_columns(self, columns: list) -> list:
-        return [Column(column) for column in columns]
-            
+        cols: list = [Column(column) for column in columns]
+        for c in cols:
+            if c.foreign_columns:
+                self.foreign_keys.append(c)
+            else:
+                self.columns.append(c)

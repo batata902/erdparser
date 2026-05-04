@@ -1,4 +1,5 @@
-from erdparser.parser import DiagramParser
+from parser import DiagramParser
+from compiler.schema_maker import SchemaMaker
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -16,3 +17,9 @@ for t in tables:
     print(t.table_name)
     for c in t.columns:
         print(f'-> {G}column name{E} => {c.name} :: {B}column meta{E} => {c.metadata}')
+    if t.foreign_keys:
+        for c in t.foreign_keys:
+            print(f'----> Foreign_keys: {c.name} || {c.foreign_columns[c.name].columns}')
+
+schema: SchemaMaker = SchemaMaker(tables)
+schema.save_file('schema_teste.sql')
