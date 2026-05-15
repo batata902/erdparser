@@ -36,9 +36,11 @@ class Column:
         if not type:
              return None
         if 'char' in type.lower():
-            print('\033[31mVARCHAR AQUI\033[m')
-            size: str = columns['size']
-            type = type.replace('n', size)
+            try:
+                size: str = columns['size']
+                type = type.replace('n', size)
+            except KeyError:
+                pass
         if 'int' in type.lower():
              type = type.replace('INT', 'INTEGER')
         return type
