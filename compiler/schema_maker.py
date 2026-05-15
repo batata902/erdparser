@@ -20,14 +20,15 @@ class SchemaMaker:
 
 
     def create_table(self, table_name: str, cols: list, fkeys: list) -> str:
-        sql_line: str = f'CREATE TABLE IF NOT EXISTS {table_name} (\n{self.create_columns(cols)});\n\n'
+        sql_line: str = f'CREATE TABLE IF NOT EXISTS {table_name} (\n{self.create_columns(cols, fkeys)});\n\n'
+
         if fkeys:
             fk: str = self.add_fkeys(table_name, fkeys)
             sql_line += fk if fk != None else ''
         return sql_line
 
 
-    def create_columns(self, cols: list) -> str:
+    def create_columns(self, cols: list, fkeys: list) -> str:
         final_columns_text: str = ''
         for c in cols:
             if c.metadata['isPkey'] and c.metadata['type'] == 'INTEGER':
@@ -39,15 +40,19 @@ class SchemaMaker:
             if not c.metadata['isOpt'] and not c.metadata['isPkey']:
                 final_columns_text += ' NOT NULL'
             final_columns_text += ',\n'
-            
+
+        for c in fkeys:
+            for f in c.foreign_columns:
+                final_columns_text += f'\t{f} {c.foreign_columns[f].columns[0]['type']},\n'
+        
+        final_columns_text = final_columns_text[::-1].replace(",", "", 1)[::-1]
+
         return final_columns_text
         
 
     def add_fkeys(self, table_name: str, fkeys: list) -> str:
         alter_table: str = ''
         for f in fkeys:
-            print (f.foreign_columns)
             for fk in f.foreign_columns:
-                alter_table: str = f'ALTER TABLE {table_name} ADD CONSTRAINT {table_name + '_' + random_chars()} FOREIGN KEY({fk}) REFERENCES {findTablebyId(self.tables, f.foreign_columns[fk].sourceTableId)}({f.foreign_columns[fk].get_attr()})'
-                print(alter_table)
+                alter_table: str = f'ALTER TABLE {table_name} ADD CONSTRAINT {table_name + '_' + random_chars()} FOREIGN KEY({fk}) REFERENCES {findTablebyId(self.tables, f.foreign_columns[fk].sourceTableId)}({f.foreign_columns[fk].get_attr()});\n\n'
         return alter_table

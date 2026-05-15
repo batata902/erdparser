@@ -1,8 +1,8 @@
 class ForeignKey:
     def __init__(self, name: str, columns: list):
-        self.name = name
-        self.columns = columns
-        self.sourceTableId = self.getSourceTableId(self.columns)
+        self.name: str = name
+        self.columns: list = columns
+        self.sourceTableId: str = self.getSourceTableId(self.columns)
 
     def getSourceTableId(self, atributes: list) -> str:
         id: str = ''
