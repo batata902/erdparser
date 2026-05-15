@@ -1,5 +1,5 @@
 from table import Table
-from compiler.utils import random_chars
+from compiler.utils import random_chars, findTablebyId
 
 class SchemaMaker:
     def __init__(self, tables: list):
@@ -36,7 +36,7 @@ class SchemaMaker:
             if c.metadata['isPkey']:
                 final_columns_text += ' PRIMARY KEY'
 
-            if not c.metadata['itsOpt'] and not c.metadata['isPkey']:
+            if not c.metadata['isOpt'] and not c.metadata['isPkey']:
                 final_columns_text += ' NOT NULL'
             final_columns_text += ',\n'
             
@@ -44,6 +44,7 @@ class SchemaMaker:
         
 
     def add_fkeys(self, table_name: str, fkeys: list) -> str:
-        print(fkeys)
-        alter_table: str = f'ALTER TABLE {table_name} ADD CONSTRAINT {table_name + '_' + random_chars()} FOREIGN KEY() REFERENCES ()'
+        print (fkeys)
+        reference_table_name: str = findTablebyId(self.tables, )
+        alter_table: str = f'ALTER TABLE {table_name} ADD CONSTRAINT {table_name + '_' + random_chars()} FOREIGN KEY() REFERENCES tabela()'
         

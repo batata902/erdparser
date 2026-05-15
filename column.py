@@ -18,7 +18,7 @@ class Column:
             self.metadata = {
                 'type': self.parse_type(columns),
                 'isPkey': columns.get('isPrimaryKey', False), 
-                'itsOpt': columns.get('itsOptional', False), 
+                'isOpt': columns.get('isOptional', False), 
                 'isUniq': columns.get('isUnique', False)
             }
     
@@ -27,8 +27,10 @@ class Column:
     
     def get_fk_props(self, column: dict) -> list:
         foreign_key_refs: list = column['foreignKeyProps']['columns']
+        sourceTableId = column['foreignKeyProps']['sourceTableId']
         for f_ref in foreign_key_refs:
             f_ref.pop('id')
+        foreign_key_refs[0]['sourceTableId'] = sourceTableId
         return foreign_key_refs
 
     def parse_type(self, columns: dict) -> str:

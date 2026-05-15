@@ -92,13 +92,13 @@
               }
             }
           ],
-          "isSelected": true
+          "isSelected": false
         },
         "measured": {
           "width": 240,
           "height": 102
         },
-        "selected": true,
+        "selected": false,
         "dragging": false
       },
       {
@@ -241,7 +241,8 @@
               "type": "VARCHAR(n)",
               "position": 0,
               "isPrimaryKey": false,
-              "size": "50"
+              "size": "50",
+              "isOptional": false
             },
             {
               "id": "48694c8d-d3ea-40df-8dae-bf2fdb314442",
@@ -249,7 +250,8 @@
               "type": "VARCHAR(n)",
               "position": 0,
               "isPrimaryKey": false,
-              "size": "15"
+              "size": "15",
+              "isOptional": false
             },
             {
               "id": "ab6ac6eb-1046-4dec-b50f-e26bd4734ec9",
@@ -257,16 +259,17 @@
               "type": "VARCHAR(n)",
               "position": 0,
               "isPrimaryKey": false,
-              "size": "50"
+              "size": "50",
+              "isOptional": true
             }
           ],
-          "isSelected": false
+          "isSelected": true
         },
         "measured": {
           "width": 240,
           "height": 126
         },
-        "selected": false,
+        "selected": true,
         "dragging": false
       },
       {
@@ -567,5 +570,5 @@
     "id": 264759
   },
   "id": 448581,
-  "updatedAtTimestamp": 1778854110
+  "updatedAtTimestamp": 1778854464
 }

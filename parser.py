@@ -17,7 +17,7 @@ class DiagramParser:
     
     def parse(self):
         for n in self.nodes:
-            table: Table = Table(n['data']['label'], n['data']['columns'])
+            table: Table = Table(n['id'], n['data']['label'], n['data']['columns'])
             self.tables.append(table)
 
         return self
