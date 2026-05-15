@@ -30,7 +30,7 @@ class Column:
         sourceTableId = column['foreignKeyProps']['sourceTableId']
         for f_ref in foreign_key_refs:
             f_ref.pop('id')
-        foreign_key_refs[0]['sourceTableId'] = sourceTableId
+        foreign_key_refs.append({'sourceTableId': sourceTableId})
         return foreign_key_refs
 
     def parse_type(self, columns: dict) -> str:

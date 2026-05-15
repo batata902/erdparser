@@ -44,7 +44,10 @@ class SchemaMaker:
         
 
     def add_fkeys(self, table_name: str, fkeys: list) -> str:
-        print (fkeys)
-        reference_table_name: str = findTablebyId(self.tables, )
-        alter_table: str = f'ALTER TABLE {table_name} ADD CONSTRAINT {table_name + '_' + random_chars()} FOREIGN KEY() REFERENCES tabela()'
-        
+        alter_table: str = ''
+        for f in fkeys:
+            print (f.foreign_columns)
+            for fk in f.foreign_columns:
+                alter_table: str = f'ALTER TABLE {table_name} ADD CONSTRAINT {table_name + '_' + random_chars()} FOREIGN KEY({fk}) REFERENCES {findTablebyId(self.tables, f.foreign_columns[fk].sourceTableId)}({f.foreign_columns[fk].get_attr()})'
+                print(alter_table)
+        return alter_table
