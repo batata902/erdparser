@@ -1,4 +1,4 @@
-from compiler.utils import findTablebyId
+from converter.utils import findTablebyId
 
 class PostgreSQLConverter:
     def __init__(self, tables: list):
@@ -8,7 +8,6 @@ class PostgreSQLConverter:
 
     def save_file(self, file_name: str):
         open(file_name, 'w', encoding='utf-8').write(self.schema)
-        print(f'[+] Schema criado --> {file_name}')
 
 
     def create_db(self, tables: list) -> str:

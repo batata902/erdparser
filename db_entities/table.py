@@ -1,6 +1,6 @@
-from column import Column
-from foreign_key import ForeignKey
-from compiler.utils import parse_type, isForeignKey
+from db_entities.column import Column
+from db_entities.foreign_key import ForeignKey
+from converter.utils import parse_type, isForeignKey
 
 class Table:
     def __init__(self, table_id: str, table_name: str, columns: list):

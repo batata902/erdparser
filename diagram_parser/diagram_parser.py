@@ -1,6 +1,6 @@
 import json
 
-from table import Table
+from db_entities.table import Table
 
 class DiagramParser:
     def __init__(self, file_path: str):

@@ -1,4 +1,4 @@
-from compiler.utils import parse_type
+from converter.utils import parse_type
 
 class Column:
     def __init__(self, column: dict):
