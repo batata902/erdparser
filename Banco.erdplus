@@ -263,13 +263,13 @@
               "isOptional": true
             }
           ],
-          "isSelected": false
+          "isSelected": true
         },
         "measured": {
           "width": 240,
           "height": 126
         },
-        "selected": false,
+        "selected": true,
         "dragging": false
       },
       {
@@ -323,13 +323,13 @@
               "isOptional": false
             }
           ],
-          "isSelected": true
+          "isSelected": false
         },
         "measured": {
           "width": 240,
           "height": 78
         },
-        "selected": true,
+        "selected": false,
         "dragging": false
       },
       {
@@ -559,8 +559,8 @@
       }
     ],
     "viewport": {
-      "x": 327,
-      "y": 56.5,
+      "x": 283.38862724367334,
+      "y": 65.50366582690754,
       "zoom": 1
     }
   },
@@ -572,5 +572,5 @@
     "id": 264759
   },
   "id": 448581,
-  "updatedAtTimestamp": 1778859331
+  "updatedAtTimestamp": 1778859741
 }

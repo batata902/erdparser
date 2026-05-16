@@ -29,3 +29,7 @@ class DiagramParser:
 
         return self.tables
     
+
+    @staticmethod
+    def get_fk_columns(self, column: dict) -> list:
+        return column['']

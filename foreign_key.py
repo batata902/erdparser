@@ -1,26 +1,21 @@
+from compiler.utils import parse_type
+
 class ForeignKey:
-    def __init__(self, name: str, columns: list):
-        self.name: str = name
-        self.columns: list = columns
-        self.sourceTableId: str = self.getSourceTableId(self.columns)
+    def __init__(self, column: dict, sourceTableId: str):
+        self.name: str = column.get('name', '')
+        self.type: str = column.get('type', '')
 
-    def getSourceTableId(self, atributes: list) -> str:
-        id: str = ''
-        for a in atributes:
-            try:
-                id = a['sourceTableId']
-            except KeyError:
-                continue
-
-        return id
-
-    def get_fkey_column(self) -> str:
-        return self.name
+        self.sourceTableId: str = sourceTableId
     
-    def get_fkey_referenceId(self) -> str:
-        return self.sourceTableId
+
+    def get_fk_source_table(self, column: dict) -> list:
+        foreign_key_refs: list = column['foreignKeyProps']['columns'] # [ {name: 'fk_example', type='char{n}', size='11'}, {...}, {...} ]
+        self.sourceTableId = column['foreignKeyProps']['sourceTableId']
+
+        for f_ref in foreign_key_refs:
+            f_ref.pop('id')
+
+            f_ref['type'] = parse_type(f_ref)
+
+        return foreign_key_refs
     
-    def get_attr(self) -> str:
-        for a in self.columns:
-            return a['name']
-        return 'NULL'

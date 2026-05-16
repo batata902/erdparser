@@ -1,7 +1,6 @@
-from table import Table
-from compiler.utils import random_chars, findTablebyId
+from compiler.utils import findTablebyId
 
-class SchemaMaker:
+class PostgreSQLConverter:
     def __init__(self, tables: list):
         self.tables: list = tables
         self.schema: str = self.create_db(self.tables)
@@ -41,9 +40,8 @@ class SchemaMaker:
                 final_columns_text += ' NOT NULL'
             final_columns_text += ',\n'
 
-        for c in fkeys:
-            for f in c.foreign_columns:
-                final_columns_text += f'\t{f} {c.foreign_columns[f].columns[0]['type']},\n'
+        for f in fkeys:
+            final_columns_text += f'\t{f.name} {f.type},\n'
         
         final_columns_text = final_columns_text[::-1].replace(",", "", 1)[::-1]
 
@@ -53,6 +51,6 @@ class SchemaMaker:
     def add_fkeys(self, table_name: str, fkeys: list) -> str:
         alter_table: str = ''
         for f in fkeys:
-            for fk in f.foreign_columns:
-                alter_table: str = f'ALTER TABLE {table_name} ADD CONSTRAINT {table_name + '_' + random_chars()} FOREIGN KEY({fk}) REFERENCES {findTablebyId(self.tables, f.foreign_columns[fk].sourceTableId)}({f.foreign_columns[fk].get_attr()});\n\n'
+            alter_table += f'ALTER TABLE {table_name} ADD CONSTRAINT {table_name + '_fk'} FOREIGN KEY({f.name}) REFERENCES {findTablebyId(self.tables, f.sourceTableId)}({f.name});\n'
+        alter_table += '\n'
         return alter_table
