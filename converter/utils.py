@@ -1,3 +1,12 @@
+import random
+
+def random_word() -> str:
+    chars: str = "abcdefghijklmnopqrstuvwxyz"
+    word: str = ""
+    for _ in range(0, 5):
+        word += random.choice(chars)
+    return word
+
 def findTablebyId(tables: list, id: str) -> str | bool:
     for t in tables:
         if t.table_id == id:

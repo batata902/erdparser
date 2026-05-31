@@ -1,8 +1,9 @@
-from converter.utils import findTablebyId
+from converter.utils import findTablebyId, random_word
 
 class PostgreSQLConverter:
     def __init__(self, tables: list):
         self.tables: list = tables
+        self.fkeys_list: list = []
         self.schema: str = self.create_db(self.tables)
 
 
@@ -14,6 +15,9 @@ class PostgreSQLConverter:
         schema: str = ''
         for t in tables:
             schema += self.create_table(t.table_name, t.columns, t.foreign_keys)
+
+        for fk in self.fkeys_list:
+            schema += fk if fk != None else ''
         return schema
 
 
@@ -22,7 +26,7 @@ class PostgreSQLConverter:
 
         if fkeys:
             fk: str = self.add_fkeys(table_name, fkeys)
-            sql_line += fk if fk != None else ''
+            self.fkeys_list.append(fk)
         return sql_line
 
 
@@ -50,6 +54,6 @@ class PostgreSQLConverter:
     def add_fkeys(self, table_name: str, fkeys: list) -> str:
         alter_table: str = ''
         for f in fkeys:
-            alter_table += f'ALTER TABLE {table_name} ADD CONSTRAINT {table_name + '_fk'} FOREIGN KEY({f.name}) REFERENCES {findTablebyId(self.tables, f.sourceTableId)}({f.name});\n'
+            alter_table += f'ALTER TABLE {table_name} ADD CONSTRAINT {table_name + '_' + random_word() + '_fk'} FOREIGN KEY({f.name}) REFERENCES {findTablebyId(self.tables, f.sourceTableId)}({f.name});\n'
         alter_table += '\n'
         return alter_table
